@@ -1,0 +1,214 @@
+openapi: 3.0.0
+info:
+  title: jobs api
+  contact: {}
+  version: "1.0"
+servers:
+  - url: http://localhost:3000/api/v1
+    variables: {}
+paths:
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Register user
+      operationId: Registeruser
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/RegisteruserRequest"
+                - example:
+                    name: chris4
+                    email: chris4@gmail.com
+                    password: chrisopen1
+              example:
+                name: chris4
+                email: chris4@gmail.com
+                password: chrisopen1
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login User
+      operationId: LoginUser
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/LoginUserRequest"
+                - example:
+                    email: chris2@gmail.com
+                    password: chrisopen1
+              example:
+                email: chris2@gmail.com
+                password: chrisopen1
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /jobs:
+    post:
+      tags:
+        - jobs
+      summary: create a job
+      operationId: createajob
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: [] # Secure this endpoint with bearer token authentication
+    get:
+      tags:
+        - jobs
+      summary: get all jobs
+      operationId: getalljobs
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: [] # Secure this endpoint with bearer token authentication
+  /job/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The job ID
+    get:
+      tags:
+        - jobs
+      summary: get single job
+      operationId: getsinglejob
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: [] # Secure these endpoints with bearer token authentication
+    patch:
+      tags:
+        - jobs
+      summary: update job
+      operationId: updatejob
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/updatejobrequest"
+                - example:
+                    company: apple
+                    position: Seniors front end
+              example:
+                company: apple
+                position: Seniors front end
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: [] # Secure this endpoint with bearer token authentication
+    delete:
+      tags:
+        - jobs
+      summary: delete job
+      operationId: deletejob
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: [] # Secure this endpoint with bearer token authentication
+components:
+  schemas:
+    RegisteruserRequest:
+      title: RegisteruserRequest
+      required:
+        - name
+        - email
+        - password
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        name: chris4
+        email: chris4@gmail.com
+        password: chrisopen1
+    LoginUserRequest:
+      title: LoginUserRequest
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: chris2@gmail.com
+        password: chrisopen1
+    updatejobrequest:
+      title: updatejobrequest
+      required:
+        - company
+        - position
+      type: object
+      properties:
+        company:
+          type: string
+        position:
+          type: string
+      example:
+        company: apple
+        position: Seniors front end
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security:
+  - bearer: [] # Define the global security scheme
+tags:
+  - name: Misc
+    description: ""
+  - name: Auth
+    description: ""
+  - name: jobs
+    description: ""
